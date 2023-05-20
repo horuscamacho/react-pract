@@ -1,9 +1,6 @@
 import React from "react";
-import { ToDoCounter } from "./ToDoCounter";
-import { ToDoSearch } from "./ToDoSearch";
-import { ToDoList } from "./ToDoList";
-import { ToDoItem } from "./ToDoItem";
-import { CreateToDoButton } from "./CreateToDoButton";
+import { useLocalStorage } from "./useLocalStorage";
+import { AppUI } from "./AppUI";
 
 /*const defaultToDos = [
   {
@@ -29,18 +26,6 @@ import { CreateToDoButton } from "./CreateToDoButton";
 ];*/
 //localStorage.setItem("TODOS_V1", JSON.stringify(defaultToDos));
 //localStorage.removeItem("TODOS_V1");
-function useLocalStorage(itemsName, initialValue) {
-  let parsedItems = localStorage.getItem(itemsName);
-  const [items, setItems] = React.useState(
-    parsedItems ? JSON.parse(parsedItems) : initialValue
-  );
-  const saveItems = (newItems) => {
-    const stringifiedTodos = JSON.stringify(newItems);
-    localStorage.setItem(itemsName, stringifiedTodos);
-    setItems(newItems);
-  };
-  return [items, saveItems];
-}
 
 function App() {
   const [todos, saveTodos] = useLocalStorage("TODOS_V1", []);
@@ -58,6 +43,17 @@ function App() {
   const completeTodos = todos.filter((todo) => todo.completed).length;
   const totalTodos = todos.length;
 
+  console.log("Log 1");
+
+  React.useEffect(() => {
+    console.log("Log 2");
+  });
+
+  /*  React.useEffect(() => {
+            console.log("Log 2");
+          }, [todos]);*/
+  console.log("Log 3");
+
   const completeToDo = (text) => {
     const todoIndex = todos.findIndex((todo) => todo.text === text);
     const newTodos = [...todos];
@@ -68,29 +64,22 @@ function App() {
     const newTodos = [...todos];
     const todoIndex = todos.findIndex((todo) => todo.text === text);
     newTodos.splice(todoIndex, 1);
-    console.log(newTodos);
+    saveTodos(newTodos);
   };
 
   return (
-    <>
-      <ToDoCounter completed={completeTodos} total={totalTodos} />
-      <ToDoSearch searchValue={searchValue} setSearchValue={setSearchValue} />
-      <ToDoList searchValue={searchValue}>
-        {searchedTodos.map((todo) => (
-          <ToDoItem
-            key={todo.text}
-            text={todo.text}
-            completed={todo.completed}
-            setTodos={saveTodos}
-            todos={todos}
-            onComplete={() => completeToDo(todo.text)}
-            onDelete={() => deleteToDo(todo.text)}
-          />
-        ))}
-      </ToDoList>
-      <CreateToDoButton />
-    </>
+    <AppUI
+      completeToDo={completeToDo}
+      completeTodos={completeTodos}
+      saveTodos={saveTodos}
+      setSearchValue={setSearchValue}
+      searchedTodos={searchedTodos}
+      searchValue={searchValue}
+      todos={todos}
+      totalTodos={totalTodos}
+      deleteToDo={deleteToDo}
+    />
   );
 }
 
-export default App;
+export { App };
