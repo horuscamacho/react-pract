@@ -8,6 +8,7 @@ import { TodosLoading } from "../TodosLoading";
 import { TodosError } from "../TodosError";
 import { TodosEmpty } from "../TodosEmpty";
 import { Modal } from "../Modal";
+import { TodoForm } from "../TodoForm";
 import { TodoContext } from "../ToDoContext";
 
 function AppUI() {
@@ -47,7 +48,11 @@ function AppUI() {
       </TodoContext.Consumer>
 
       <CreateToDoButton />
-      {openModal && <Modal>La funcionalidad de agregar TODO</Modal>}
+      {openModal && (
+        <Modal>
+          <TodoForm />
+        </Modal>
+      )}
     </>
   );
 }

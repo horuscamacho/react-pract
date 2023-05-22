@@ -19,7 +19,7 @@ function TodoProvider({ children }) {
     /* return todo.text.toLowerCase().includes(searchValue.toLowerCase());*/
   });
 
-  const [openModal, setOpenModal] = React.useState(true);
+  const [openModal, setOpenModal] = React.useState(false);
 
   const completeTodos = todos.filter((todo) => todo.completed).length;
   const totalTodos = todos.length;
@@ -27,13 +27,13 @@ function TodoProvider({ children }) {
   /*  console.log("Log 1");*/
 
   /*React.useEffect(() => {
-                                                  console.log("Log 2");
-                                                });*/
+                                                      console.log("Log 2");
+                                                    });*/
 
   /*React.useEffect(() => {
-                                            console.log("Log 2");
-                                          }, [todos]);
-                                          console.log("Log 3");*/
+                                                console.log("Log 2");
+                                              }, [todos]);
+                                              console.log("Log 3");*/
 
   const completeToDo = (text) => {
     const todoIndex = todos.findIndex((todo) => todo.text === text);
@@ -45,6 +45,14 @@ function TodoProvider({ children }) {
     const newTodos = [...todos];
     const todoIndex = todos.findIndex((todo) => todo.text === text);
     newTodos.splice(todoIndex, 1);
+    saveTodos(newTodos);
+  };
+  const addToDo = (text) => {
+    const newTodos = [...todos];
+    newTodos.push({
+      completed: false,
+      text,
+    });
     saveTodos(newTodos);
   };
 
@@ -64,6 +72,7 @@ function TodoProvider({ children }) {
         todos,
         openModal,
         setOpenModal,
+        addToDo,
       }}
     >
       {children}
