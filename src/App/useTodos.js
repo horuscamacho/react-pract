@@ -1,9 +1,7 @@
 import React from "react";
 import { useLocalStorage } from "./useLocalStorage";
 
-const TodoContext = React.createContext();
-
-function TodoProvider({ children }) {
+function useTodos() {
   const {
     items: todos,
     saveItems: saveTodos,
@@ -27,13 +25,13 @@ function TodoProvider({ children }) {
   /*  console.log("Log 1");*/
 
   /*React.useEffect(() => {
-                                                      console.log("Log 2");
-                                                    });*/
+                                                            console.log("Log 2");
+                                                          });*/
 
   /*React.useEffect(() => {
-                                                console.log("Log 2");
-                                              }, [todos]);
-                                              console.log("Log 3");*/
+                                                      console.log("Log 2");
+                                                    }, [todos]);
+                                                    console.log("Log 3");*/
 
   const completeToDo = (text) => {
     const todoIndex = todos.findIndex((todo) => todo.text === text);
@@ -56,28 +54,22 @@ function TodoProvider({ children }) {
     saveTodos(newTodos);
   };
 
-  return (
-    <TodoContext.Provider
-      value={{
-        loading,
-        error,
-        searchedTodos,
-        completeTodos,
-        totalTodos,
-        searchValue,
-        setSearchValue,
-        completeToDo,
-        deleteToDo,
-        saveTodos,
-        todos,
-        openModal,
-        setOpenModal,
-        addToDo,
-      }}
-    >
-      {children}
-    </TodoContext.Provider>
-  );
+  return {
+    loading,
+    error,
+    searchedTodos,
+    completeTodos,
+    totalTodos,
+    searchValue,
+    setSearchValue,
+    completeToDo,
+    deleteToDo,
+    saveTodos,
+    todos,
+    openModal,
+    setOpenModal,
+    addToDo,
+  };
 }
 
-export { TodoContext, TodoProvider };
+export { useTodos };
