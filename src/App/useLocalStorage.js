@@ -13,7 +13,7 @@ function useLocalStorage(itemsName, initialValue) {
       setLoading(false);
     }, 1000);
     // eslint-disable-next-line
-  }, []);
+  }, [items]);
 
   const saveItems = (newItems) => {
     const stringifiedTodos = JSON.stringify(newItems);

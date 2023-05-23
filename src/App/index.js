@@ -11,6 +11,7 @@ import { ToDoItem } from "../ToDoItem";
 import { CreateToDoButton } from "../CreateToDoButton";
 import { Modal } from "../Modal";
 import { TodoForm } from "../TodoForm";
+import { ChangeAlert } from "../ChangeAlert";
 
 function App() {
   const {
@@ -67,6 +68,7 @@ function App() {
           <TodoForm setOpenModal={setOpenModal} addToDo={addToDo} />
         </Modal>
       )}
+      <ChangeAlert />
     </>
   );
 }
